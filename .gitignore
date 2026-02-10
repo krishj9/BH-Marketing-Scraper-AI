@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Cursor
+.cursor/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# GCP credentials (never commit!)
+*.json
+!deployment/*.json
+credentials.json
+service-account*.json
+
+# BigQuery cache
+.bigquery/
+
+# Temporary files
+*.tmp
+temp/
+tmp/

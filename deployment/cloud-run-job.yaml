@@ -1,0 +1,34 @@
+# Cloud Run Job specification for BH Marketing Scraper
+# Deploy with: gcloud run jobs replace deployment/cloud-run-job.yaml --region=us-east4
+#
+# Manual trigger:
+#   gcloud run jobs execute bh-scraper-job --region=us-east4
+
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: bh-scraper-job
+  labels:
+    app: bh-marketing-scraper
+spec:
+  template:
+    spec:
+      template:
+        spec:
+          containers:
+            - image: us-east4-docker.pkg.dev/mybrightday-dev/bh-scraper/bh-marketing-scraper:latest
+              resources:
+                limits:
+                  cpu: "2"
+                  memory: 4Gi
+              env:
+                - name: GCP_PROJECT_ID
+                  value: mybrightday-dev
+                - name: GCP_REGION
+                  value: us-east4
+                - name: RUN_MODE
+                  value: cloud_run
+                - name: BIGQUERY_DATASET
+                  value: bh_scraper
+          serviceAccountName: bh-scraper-sa@mybrightday-dev.iam.gserviceaccount.com
+          timeoutSeconds: 7200  # 2 hours

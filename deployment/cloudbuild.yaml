@@ -1,0 +1,43 @@
+# Cloud Build configuration for building and deploying the scraper
+# Trigger: gcloud builds submit --config deployment/cloudbuild.yaml .
+
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-east4-docker.pkg.dev/mybrightday-dev/bh-scraper/bh-marketing-scraper:$COMMIT_SHA'
+      - '-t'
+      - 'us-east4-docker.pkg.dev/mybrightday-dev/bh-scraper/bh-marketing-scraper:latest'
+      - '-f'
+      - 'deployment/Dockerfile'
+      - '.'
+
+  # Push to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-east4-docker.pkg.dev/mybrightday-dev/bh-scraper/bh-marketing-scraper:$COMMIT_SHA'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-east4-docker.pkg.dev/mybrightday-dev/bh-scraper/bh-marketing-scraper:latest'
+
+  # Deploy Cloud Run Job
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'jobs'
+      - 'replace'
+      - 'deployment/cloud-run-job.yaml'
+      - '--region=us-east4'
+
+images:
+  - 'us-east4-docker.pkg.dev/mybrightday-dev/bh-scraper/bh-marketing-scraper:$COMMIT_SHA'
+  - 'us-east4-docker.pkg.dev/mybrightday-dev/bh-scraper/bh-marketing-scraper:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

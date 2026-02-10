@@ -1,0 +1,81 @@
+# BH Marketing Scraper Configuration
+# See project-prompt.md for full specification
+
+gcp:
+  project_id: mybrightday-dev
+  region: us-east4
+  bigquery_dataset: bh_scraper
+
+crawl:
+  max_pages_per_site: 200
+  max_depth: 4
+  request_delay_seconds: 1.5
+  page_timeout_ms: 30000
+  max_retries: 3
+  headless: true
+  user_agent: "BHMarketingScraper/1.0 (+https://brightday.com)"
+
+matching:
+  embedding_similarity_threshold: 0.70
+  llm_confidence_threshold: 0.85
+  max_chars_per_chunk: 1500
+  max_chars_chunk_overlap: 100
+
+captcha_policy: skip  # skip | solve_paid_service
+run_mode: local  # local | cloud_run
+site_list_path: config/sites.yaml
+
+vertex_ai:
+  embedding_model: text-embedding-004
+  generative_model: gemini-1.5-flash
+  embedding_batch_size: 250
+
+keywords:
+  - corporate daycare
+  - corporate day care
+  - onsite daycare for employees
+  - on site child care benefits
+  - on site daycare benefits
+  - onsite childcare
+  - on site childcare
+  - on site childcare for employees
+  - company daycare on site
+  - onsite daycare
+  - childcare center
+  - child care center
+  - employer sponsored childcare
+  - early education center
+  - childcare benefit
+  - family benefits
+  - dependent care
+  - childcare at work
+  - childcare for employees
+  - childcare near my workplace
+  - childcare near work
+  - childcare program
+  - company daycare
+  - corporate child care
+  - corporate childcare
+  - daycare at work
+  - daycare benefit
+  - daycare center
+  - daycare in office
+  - daycare in workplace
+  - daycare near office
+  - employee childcare
+  - employer childcare
+  - employer daycare
+  - employer provided daycare
+  - near-site childcare
+  - office daycare
+  - on site care
+  - workplace daycare
+  - traditional child care
+  - family support
+  - family support benefits
+  - caregiver support
+  - caregiver benefits
+  - caregiving support
+  - childcare assistance
+  - support for caregivers
+  - support for parents

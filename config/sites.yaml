@@ -1,0 +1,9 @@
+# Target sites for scraping
+# Add sites as url + optional name
+# See project-prompt.md for format details
+
+sites:
+  - url: https://example.com
+    name: Example Corp
+  # - url: https://another-company.com
+  #   name: Another Company
